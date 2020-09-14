@@ -1,5 +1,4 @@
-import React, { useState, useHook, useContext } from "react";
-import axios from "axios";
+import React from "react";
 
 const Search = (props) => {
 

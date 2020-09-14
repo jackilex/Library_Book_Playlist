@@ -22,11 +22,12 @@ router.post('/', async (req,res)=>{
     
     const newBook= new Book({
             title:req.body.title,
-            authors:req.body.authors,
+            author:req.body.author,
             description:req.body.description,
             bookId:req.body.bookId,
             image:req.body.image,
-            link:req.body.link 
+            link:req.body.link,
+            publish:req.body.publish
     })
 
         await newBook.save()

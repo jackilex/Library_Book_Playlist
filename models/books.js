@@ -10,7 +10,7 @@ const bookSchema= new mongoose.Schema({
         type:String,
         required:true
     },
-    authors:{
+    author:{
         type:String,
         required:true
     },
@@ -30,9 +30,12 @@ const bookSchema= new mongoose.Schema({
         type:String,
         required:true
     },
+    publish:{
+        type:String,
+        required:true
+    },
     dateSaved:{
         type:Date,
-        required:true,
         default:Date.now
     }
 
