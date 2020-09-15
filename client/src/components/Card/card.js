@@ -3,8 +3,41 @@ import { Button, Collapse } from 'react-bootstrap'
 
 const Card = (props) => {
     const [open, setOpen] = useState(false);
-   
 
+    let authors="NA"
+    let description="NA"
+    let button="Save"
+    if(typeof props.author!== "undefined"){
+        stringify(props.author)
+    }
+    if(typeof props.description !== "undefined"){
+        description=props.description
+    }
+
+    function stringify(a){
+    let array= a
+    authors=array.join(',')
+    return authors
+    }
+ 
+
+    const thisObj={
+    title:props.title,
+    author:authors,
+    description:description,
+    bookId:props.bookId,
+    image:props.image,
+    link:props.link,
+    publish:props.publish
+}
+
+
+     function thisBook(){
+    console.log('working')
+     props.setSaved(thisObj);
+     props.savingBook(thisObj)
+     
+    }
 
 function handleDropDown(){
     setOpen(!open) 
@@ -28,10 +61,10 @@ function handleDropDown(){
                 </Collapse>
 
                 <Button href={props.link} target="_blank">View</Button>
-                <Button onClick={onSave} 
-                // value={saved}
+                <Button onClick={thisBook} 
+                // value={props.saved}
                  target="_blank">
-                 save
+                 {button}
                  </Button>
             </div>
     </div>

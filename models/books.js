@@ -7,32 +7,26 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks")
 
 const bookSchema= new mongoose.Schema({
     title:{
-        type:String,
-        required:true
+        type:String
     },
     author:{
-        type:String,
-        required:true
+        type:String
     },
     description:{
-        type:String,
-        required:true
+        type:String
+        
     },
     bookId:{
-        type:String,
-        required:true
+        type:String
     },
     image:{
-        type:String,
-        required:true
+        type:String
     },
     link:{
-        type:String,
-        required:true
+        type:String
     },
     publish:{
-        type:String,
-        required:true
+        type:String
     },
     dateSaved:{
         type:Date,

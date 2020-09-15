@@ -5,34 +5,36 @@ const Fawn = require("fawn");
 const router = express.Router();
 
 
-Fawn.init(mongoose);
+// Fawn.init(mongoose);
 
 router.get('/', async (req,res)=>{
     const savedBooks= await Book.find().select().sort('-dateSaved')
 
-    if(!savedBooks) return res.status(400).send('no books saved')
+    if(!savedBooks.length) return res.status(400).send('no books saved')
 
     res.send(savedBooks)
 })
 
 
 router.post('/', async (req,res)=>{
-    const checkBooks= await Book.find({"bookId":req.body.bookId})
-    if(checkBooks.length > 0) return res.status(400).send('book is already saved')
-    
-    const newBook= new Book({
-            title:req.body.title,
-            author:req.body.author,
-            description:req.body.description,
-            bookId:req.body.bookId,
-            image:req.body.image,
-            link:req.body.link,
-            publish:req.body.publish
-    })
+    const checkBooks= await Book.find({"bookId":req.body.bookId});
+    console.log(typeof checkBooks)
+    if(Object.keys(checkBooks).length > 0) return res.status(422).send(new error)
 
-        await newBook.save()
-        // console.log(checkBook)
-        res.send(newBook)
+    const newBook= new Book({
+        title:req.body.title,
+        author:req.body.author,
+        description:req.body.description,
+        bookId:req.body.bookId,
+        image:req.body.image,
+        link:req.body.link,
+        publish:req.body.publish
+})
+
+    await newBook.save()
+    // console.log(checkBook)
+    res.send(newBook)
+
 
 
 })
