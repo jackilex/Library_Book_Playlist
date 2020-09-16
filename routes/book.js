@@ -48,7 +48,7 @@ router.get('/:id', async(req,res)=>{
 
 
 router.delete('/:id', async(req,res)=>{
- const thisBook= await Book.findByIdAndRemove(mongoose.Types.ObjectId(req.params.id));
+ const thisBook= await Book.findByIdAndRemove(req.params.id);
 
   if(!thisBook) return res.status(404).send('The book was not found.');
  console.log(error)

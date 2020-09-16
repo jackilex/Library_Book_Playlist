@@ -4,6 +4,8 @@ import SearchContainer from './components/Search'
 import Card from './components/Card'
 import SavedContainer from './components/Saved'
 import axios from "axios";
+import context from './components/Context/Context'
+import deleteContext from './components/Context/Deletecontext'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -11,23 +13,15 @@ function App() {
   
   const [findBook,setFindBook]=useState('')
   const [queryResult, setQueryResult]=useState([])
-  const [newBook,setNewBook]=useState({})
   const [saved, setSaved]=useState({})
+  const [getCollection, setGetCollection]=useState([])
+  
 
-function handleSearchChange(e){
+  function handleSearchChange(e){
   const {value}= e.target;
   setFindBook(value)
 }
 
-// const test={
-// 	title:"next book",
-//     author:"req.body.authors",
-//     description:"req.body.description",
-//     bookId:"15644",
-//     image:"req.body.image",
-//     link:"www",
-//     publish:"202"
-// }
 
 async function handleSubmit(){
   
@@ -39,25 +33,14 @@ async function handleSubmit(){
 
 }
     
-  
-// async function onBooksave(e){
-//   const {target}=e
 
-// const result=target.value
-// console.log(target.value)
-// // await setNewBook(result)
-// // testing(result)
-// console.log(JSON.stringify(result))
-// testObject(target.value)
-// }
+useEffect(() => {
 
-// useEffect(() => {
+  axios.get("/api/book")
+  .then(res => setGetCollection(res.data))
+  .catch(err => console.log(err))
 
-//   // testing(saved)
-
-// // console.log(JSON.stringify(saved))
-// testObject(saved)
-// },[saved]);
+},[getCollection]);
 
 function savingBook(saveme){
 axios.post("/api/book", saveme)
@@ -65,27 +48,32 @@ axios.post("/api/book", saveme)
 .catch(err => console.log(err))
 }
   
-// function testObject(obj){
-//   for (let x in obj){
-//     console.log(obj[x])
-//   }
-// }
+function deleteIt(id){
+axios.delete("/api/book/"+id)
+.then(res => console.log(res))
+.catch(err => console.log(err))
+console.log(id)
+}
 
 
 
   return (
+    
     <div>
+    <context.Provider value={getCollection}>
+    <deleteContext.Provider value={deleteIt}>
       <Navbar/>
-      <div className="d-flex ">
-      <div className="ml-3">
+      <div className="d-flex flex-column ">
+      <div className="ml-3 ">
       <SearchContainer 
         handleSubmit={handleSubmit}
         handleSearchChange={handleSearchChange}
         findBook={findBook}
         queryResult={queryResult}
       />
+      <div className=" testimonial-group d-flex" id="container" >
       {queryResult.length>0 && queryResult.map((oneR,index) => (
-        <Card
+        <Card 
         key={index}
           title={oneR.volumeInfo.title}
           author={oneR.volumeInfo.authors}
@@ -97,15 +85,19 @@ axios.post("/api/book", saveme)
           setSaved={setSaved}
           saved={saved}
           savingBook={savingBook}
-          // onBooksave={onBooksave}
+         
         />
       ))}
+      </div>
       </div>
       <div>
         <SavedContainer/>
       </div>
       </div>
+      </deleteContext.Provider>
+      </context.Provider>
     </div>
+   
   );
 }
 //import React, { useState, useEffect } from "react";

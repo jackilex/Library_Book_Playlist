@@ -43,11 +43,11 @@ function handleDropDown(){
     setOpen(!open) 
 }
     return ( 
-    <div className="card text-white bg-primary mb-3 mr-4 mt-5" style={{width: "18rem"}}>
-        <img src={props.image} className="card-img-top" />
-            <div className="card-body">
+    <div className="card text-white bg-primary mb-3 mr-4 mt-5" id="card" style={{width: "15rem"}}>
+        <img src={props.image} className="card-img-top" style={{width: "10rem", height:"10rem"}} />
+            <div className="card-body " style={{width: "26rem"}}>
                 <p className="card-title">Title: {props.title} <br/> Author:{props.author} </p>
-                <p className="card-text">Published: {props.publish} </p>
+                {/* <p className="card-text">Published: {props.publish} </p> */}
                 
                 <Button
                     onClick={handleDropDown}
@@ -62,7 +62,6 @@ function handleDropDown(){
 
                 <Button href={props.link} target="_blank">View</Button>
                 <Button onClick={thisBook} 
-                // value={props.saved}
                  target="_blank">
                  {button}
                  </Button>

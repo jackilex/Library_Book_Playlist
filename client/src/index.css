@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#container{
+  min-height: 50vh;
+  overflow-x:auto !important;
+  background-color: rgb(160, 160, 58) !important;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+#card{
+  min-width: auto !important;
+  height:auto !important;
+}
