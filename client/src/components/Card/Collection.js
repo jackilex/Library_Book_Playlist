@@ -1,39 +1,34 @@
-import React, { useState, useContext } from "react";
-import { Button, Collapse } from 'react-bootstrap'
+import React, { useContext } from "react";
+import { Button} from 'react-bootstrap'
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css'
 import deleteContext from '../Context/Deletecontext'
 
 
 const Collection = (props) => {
 
   
-    const [open, setOpen] = useState(false);
+    
     const deletedCollection=useContext(deleteContext)
 
     const collectionId=props._id
 
-    function handleDropDown(){
-        setOpen(!open) 
-    }
+    
 
     let img=40
    
     return ( 
-        <div className="card text-white bg-primary mb-3 mr-4 mt-5" style={{height: "26rem", width:"18rem"}}>
-        <img src={props.image} className="card-img-top" style={{height:"12rem"}} />
+        <div className="text-white bg-primary mb-3 mr-4 mt-5" style={{ width:"15rem"}}>
+        <div className="d-flex justify-content-center">
+        <img src={props.image} className="card-img-top" style={{height:"10rem", width:"10rem"}} alt="cover"/>
+        </div>  
             <div className="card-body" >
                 <p className="card-title">Title: {props.title} <br/> Author:{props.author} </p>
                 {/* <p className="card-text">Published: {props.publish} </p> */}
                 
-                <Button
-                    onClick={handleDropDown}
-                    aria-controls="example-collapse-text"
-                 aria-expanded={open}
-                >
-                 Read Desctiption
-                </Button>    
-                <Collapse in={open}>
-                <div d="example-collapse-text">description: {props.description}</div>
-                </Collapse>
+                <Popup trigger={<Button>Read Desctiption</Button>} position="center">    
+                <div id="popup" >description: {props.description}</div>
+                </Popup>
 
                 <Button href={props.link} target="_blank">View</Button>
                 <Button  

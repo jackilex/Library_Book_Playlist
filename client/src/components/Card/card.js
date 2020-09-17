@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { Button, Collapse } from 'react-bootstrap'
+import React from "react";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css'
+import { Button } from 'react-bootstrap'
 
 const Card = (props) => {
-    const [open, setOpen] = useState(false);
+
 
     let authors="NA"
     let description="NA"
@@ -39,32 +41,24 @@ const Card = (props) => {
      
     }
 
-function handleDropDown(){
-    setOpen(!open) 
-}
-    return ( 
-    <div className="card text-white bg-primary mb-3 mr-4 mt-5" id="card" style={{width: "15rem"}}>
-        <img src={props.image} className="card-img-top" style={{width: "10rem", height:"10rem"}} />
-            <div className="card-body " style={{width: "26rem"}}>
-                <p className="card-title">Title: {props.title} <br/> Author:{props.author} </p>
-                {/* <p className="card-text">Published: {props.publish} </p> */}
-                
-                <Button
-                    onClick={handleDropDown}
-                    aria-controls="example-collapse-text"
-                 aria-expanded={open}
-                >
-                 Read Desctiption
-                </Button>    
-                <Collapse in={open}>
-                <div d="example-collapse-text">description: {props.description}</div>
-                </Collapse>
 
-                <Button href={props.link} target="_blank">View</Button>
-                <Button onClick={thisBook} 
+    return ( 
+    <div className=" text-white mb-3 mr-4 mt-5" id="card" >
+        <img src={props.image} className="card-img-top" style={{width: "10rem", height:"10rem"}} alt="cover" />
+            <div  id="card-body">
+                <p id="p">TITLE: {props.title}</p> 
+                <p> AUTHOR(S):{props.author} </p>
+                {/* <p className="card-text">Published: {props.publish} </p> */}
+                <div id="button-container">
+                <Popup id="popContainer" trigger={<Button id="button" className="btn-warning border-0">Read Desctiption</Button>} position="center">    
+                <div id="popup" >DESCRIPTION: {props.description}</div>
+                </Popup>
+                <Button id="button" className="btn-warning border-0" href={props.link} target="_blank">View</Button>
+                <Button id="button" className="btn-warning border-0" onClick={thisBook} 
                  target="_blank">
                  {button}
                  </Button>
+                 </div>
             </div>
     </div>
      );

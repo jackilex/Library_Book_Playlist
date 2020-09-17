@@ -15,12 +15,75 @@ code {
 #container{
   min-height: 50vh;
   overflow-x:auto !important;
-  background-color: rgb(160, 160, 58) !important;
+  background-color: lightseagreen;
   overflow: auto;
   white-space: nowrap;
 }
 
 #card{
-  min-width: auto !important;
-  height:auto !important;
+  height:auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-right: 6%;
+  padding-left: 4%;
+  color: black;
+}
+
+#card-body{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+}
+
+#p{
+  /* min-width: auto !important;
+  height:auto !important; */
+  /* word-wrap: break-word; */
+  display: flex;
+  flex-wrap: wrap;
+  word-break: break-all 
+}
+#button{
+  margin-top: 3%;
+  background-color: orange;
+  margin-right: 2%;
+}
+
+#popup{
+ max-height: 70vh;
+ max-width: 80vw;
+ overflow: auto;
+ color: black;
+ background-color: cornsilk;
+
+}
+
+
+#popContainer{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#button-container{
+  display: flex;
+  justify-content: center;
+  justify-content: space-evenly;
+}
+
+#collection-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-primary:hover {
+  background-color: red !important;
+}
+
+.btn-warning:hover {
+  background-color: orangered!important;
+  color: white !important;
 }

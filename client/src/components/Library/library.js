@@ -33,7 +33,7 @@ const LibraryCollection = (props) => {
 
 
     return ( 
-        <div>
+        <div className="d-flex justify-content-center">
         <div className="d-flex flex-column">
             <Button className="bg-warning border-0"
             onClick={handleDropDown}

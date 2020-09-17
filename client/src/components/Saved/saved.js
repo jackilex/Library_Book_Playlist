@@ -31,11 +31,11 @@ function getLibraries(){
     
     return ( 
         <div>
-    <div className="d-flex justify-content-around">
+    <div className="d-flex justify-content-around pt-2">
         <Button name="show" disabled={show && true} value={show} onClick={toggle}>Book Saved</Button>
         <Button disabled={showLibrary && true} onClick={toggle} >Library</Button>
     </div>
-    {show && <div>
+    {show && <div id="collection-container">
       {savedCollection.length>0 && savedCollection.map( one => (
     <Collection 
     key={one._id}
@@ -53,13 +53,13 @@ function getLibraries(){
       ) ) }
         
     </div>}
-    {showLibrary &&<div className="pt-4">
+    {showLibrary &&<div className="pt-4 ">
         <LibraryCollection   getLibraries={getLibraries}/>
     </div>
     }
-    {showLibrary && <div className="pt-2 d-flex justify-content-center flex-column">
+    {showLibrary && <div className="pt-2 d-flex justify-content-center flex-direction-column justify-content-center">
     {myLibraries.map(oneL =>(
-        <Button className="mb-2 bg-success border-0 " key={oneL._id}>{oneL.name}</Button>
+        <Button className="mb-2 mr-2 bg-success border-0 " key={oneL._id}>{oneL.name}</Button>
     ))}
     </div>}
     </div>
