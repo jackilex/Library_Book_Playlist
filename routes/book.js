@@ -18,7 +18,7 @@ router.get('/', async (req,res)=>{
 
 router.post('/', async (req,res)=>{
     const checkBooks= await Book.find({"bookId":req.body.bookId});
-    console.log(typeof checkBooks)
+    // console.log(typeof checkBooks)
     if(Object.keys(checkBooks).length > 0) return res.status(422).send(new error)
 
     const newBook= new Book({
@@ -40,10 +40,10 @@ router.post('/', async (req,res)=>{
 })
 
 router.get('/:id', async(req,res)=>{
-    const findBook= await Book.findById(req.params.bookId).select();
-   
-    console.log(req.prams.id)
-    res.send(findBook)
+    // const findBook= await Book.findById(req.params.bookId).select();
+    const findBooks=await Book.find({_id:{$in:req.params.id}})
+    console.log(findBooks)
+    res.send(findBooks)
    })
 
 

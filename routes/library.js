@@ -1,4 +1,5 @@
 const {Library}= require("../models/library");
+const {Book}= require("../models/books");
 const mongoose=require('mongoose');
 const express= require('express');
 const router = express.Router();
@@ -12,6 +13,17 @@ router.get('/', async (req,res)=>{
 
     res.send(libraries)
 })
+
+router.get("/:id", async (req,res)=>{
+
+    const library=Library.findById(req.params.id)
+    if(library.length===0)return res.status(400).send('no libraries found')
+
+
+    const thisLibrary= await Library.findById(req.params.id).populate('Book').select()
+    res.send(thisLibrary)
+})
+
 
 
 router.post('/', async (req,res)=>{
@@ -32,12 +44,26 @@ router.post('/', async (req,res)=>{
 })
 
 
-router.put("/:library", async (req,res)=>{
+router.put("/:id", async (req,res)=>{
 
-    const library=Library.findById(req.params.id)
-    if(library.length===0)return res.status(400).send('no libraries created')
+    const library=await Library.findById(req.params.id)
+    
+    if(Object.keys(library).length === 0)return res.status(400).send('no libraries found')
 
-    const newBook= await Library.findByIdAndUpdate(req.params.library,{$push:{"books":req.body._id}},{new: true})
+    const checkBooks= await Library.findById(req.params.id).populate('Book').select('books');
+    const testIt =await (checkBooks.books).some((x) => {
+        if(x==req.body.book){
+            return true
+        }else{
+            return false
+        }
+    
+    })
+    console.log(testIt)
+    if(testIt === true)return res.send('book is already added to library')
+
+
+    const newBook= await Library.findByIdAndUpdate(req.params.id,{$push:{"books":req.body.book}},{new: true})
     res.send(newBook)
 })
 

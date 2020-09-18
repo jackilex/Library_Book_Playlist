@@ -50,11 +50,11 @@ const Card = (props) => {
                 <p> AUTHOR(S):{props.author} </p>
                 {/* <p className="card-text">Published: {props.publish} </p> */}
                 <div id="button-container">
-                <Popup id="popContainer" trigger={<Button id="button" className="btn-warning border-0">Read Desctiption</Button>} position="center">    
+                <Popup id="popContainer" trigger={<Button id="button" className="btn-warningborder-0">Read Desctiption</Button>} position="center">    
                 <div id="popup" >DESCRIPTION: {props.description}</div>
                 </Popup>
-                <Button id="button" className="btn-warning border-0" href={props.link} target="_blank">View</Button>
-                <Button id="button" className="btn-warning border-0" onClick={thisBook} 
+                <Button id="button" className="btn-warningborder-0" href={props.link} target="_blank">View</Button>
+                <Button id="button" className="btn-warningborder-0" onClick={thisBook} 
                  target="_blank">
                  {button}
                  </Button>

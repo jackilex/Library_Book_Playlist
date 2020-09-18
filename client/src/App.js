@@ -27,9 +27,7 @@ async function handleSubmit(){
   
   const title= await findBook.trim()
   const {data}= await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+intitle:${title}&key=AIzaSyB-_zBnjWEf3eIqv0P22htCRJIxxhA567Y`);
-  console.log(data.items)
   await setQueryResult(data.items);
-  
 
 }
     

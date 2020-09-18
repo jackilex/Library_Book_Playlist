@@ -6,33 +6,10 @@ import deleteContext from '../Context/Deletecontext'
 import axios from "axios";
 
 
-const Collection = (props) => {
+const LibraryCards = (props) => {
 
-  const [choice, setChoice]=useState([])
-    
     const deletedCollection=useContext(deleteContext)
-
-    const collectionId=props._id
-
-    useEffect(() => {
-        axios.get("/api/library")
-        .then(res => setChoice(res.data))
-        .catch(err => console.log(err))
-      },[]);
-   
-      function handleChange(e){
-          const lib= (e.target.value.split(','))[0];
-          const book=(e.target.value.split(','))[1];
-          
-        console.log(lib,book)
-          axios.put("/api/library/"+lib,{book:book})
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
-          
-      }
-
-
-   
+  
     return ( 
         <div className="text-white bg-primary mb-3 mr-4 mt-5" style={{ width:"15rem"}}>
         <div className="d-flex justify-content-center">
@@ -74,4 +51,4 @@ const Collection = (props) => {
      );
 }
  
-export default Collection;
+export default LibraryCards;
