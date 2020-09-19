@@ -48,7 +48,7 @@ axios.post("/api/book", saveme)
   
 function deleteIt(id){
 axios.delete("/api/book/"+id)
-.then(res => console.log(res))
+.then(res => console.log('t be deleted'))
 .catch(err => console.log(err))
 console.log(id)
 }

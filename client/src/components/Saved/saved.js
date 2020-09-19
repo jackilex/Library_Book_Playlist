@@ -2,8 +2,11 @@ import React,{useContext, useState} from 'react';
 import Collection from '../Card/Collection'
 import context from '../Context/Context'
 import LibraryCollection from '../Library'
+import LibraryCards from '../Card/LibraryCards'
 import { Button } from 'react-bootstrap'
 import axios from "axios";
+
+
 
 const SavedContainer = () => {
 
@@ -11,8 +14,8 @@ const savedCollection=useContext(context)
 const [show, setShow]=useState(true)
 const [showLibrary, setShowLibrary]=useState(false)
 const [myLibraries, setLibraries]= useState([])
-const[bookFound, setBooksFound]=useState([])
 const [getLibraryBooks,setGetLibraryBooks]=useState([])
+const [reloadOnDelete, setReloadOnDelete]=useState('')
 
 function toggle(){
   let resultForBooks= !show
@@ -32,32 +35,39 @@ function getLibraries(){
     }
   
     
-function getLibraryContents(e){
+async function getLibraryContents(e){
   const id= e.target.value
-  // getThisLib(id)
-  
-  getTheBooks(["5f62f26dfd913f4dcc9717f2", "5f62e54c27a92e49d009c302"])
+  setReloadOnDelete(id)
+  getThisLib(id)
+
 }
 
 function getThisLib(id){
   axios.get("/api/library/"+id)
-  .then(res => console.log(res.data.books))
+  .then(res => {
+    filter(savedCollection,res.data.books)
+  })
   .catch(err => console.log(err))
   console.log(id)
   }
   
-  function getTheBooks(array){
-    
-    axios.get("/api/book/"+array).then(resArr => console.log(resArr))
-    // axios.all([
-    //   array.map(x =>{
-    //     axios.get("/api/books/"+x)
-    //   })
-      
-    // ]).then(resArr => console.log(resArr))
-   
-    }
 
+
+
+async function filter(all,want){
+  let send=[]
+// all.filter(x=> console.log(x===want[0]))
+all.map(x =>{
+  let id=x._id
+  want.map(y => {
+    if(y==id){
+      send.push(x)  
+    }
+  })
+})
+setGetLibraryBooks(send)
+
+}
 
     return ( 
         <div>
@@ -93,17 +103,37 @@ function getThisLib(id){
         key={oneL._id}
         value={oneL._id}
         onClick={getLibraryContents}
+        // onClick={filter}
         >{oneL.name}</Button>
     ))}
-    <div>
-        {/* cards go here */}
-
-    </div>
-    <div>
-
-
-    </div>
+  
+  
     </div>}
+
+    <div>
+    {showLibrary && <div className="d-flex flex-direction-column">
+        {/* cards go here */}
+        {getLibraryBooks.length>0 && getLibraryBooks.map((oneB,i) =>(
+          <LibraryCards
+    key={i}
+    title={oneB.title}
+    author={oneB.author}
+    description={oneB.description}
+    bookId={oneB.bookId}
+    image={oneB.image}
+    publish={oneB.publish}
+    link={oneB.link}
+    _id={oneB._id}
+    getLibraries={getLibraries}
+    myLibraries={myLibraries}
+    reloadOnDelete={reloadOnDelete}
+    getThisLib={getThisLib}
+    
+          />
+        ))}
+    </div>}
+
+    </div>
     </div>
      );
 }
