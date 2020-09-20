@@ -24,6 +24,9 @@ function toggle(){
     setShowLibrary(resultForLibraries)
     if(resultForLibraries=== true){
         getLibraries()
+      //   if(showLibrary===true){
+      //   getThisLib(reloadOnDelete)
+      // }
     }
 }
 
@@ -36,7 +39,7 @@ function getLibraries(){
   
     
 async function getLibraryContents(e){
-  const id= e.target.value
+  const id=await e.target.value
   setReloadOnDelete(id)
   getThisLib(id)
 
@@ -48,7 +51,7 @@ function getThisLib(id){
     filter(savedCollection,res.data.books)
   })
   .catch(err => console.log(err))
-  console.log(id)
+ 
   }
   
 
@@ -70,10 +73,10 @@ setGetLibraryBooks(send)
 }
 
     return ( 
-        <div>
-    <div className="d-flex justify-content-around pt-2">
-        <Button name="show" disabled={show && true} value={show} onClick={toggle}>Book Saved</Button>
-        <Button disabled={showLibrary && true} onClick={toggle} >Library</Button>
+        <div id="library-container" >
+    <div id="bookNav" className="d-flex justify-content-center pb-2 pt-2">
+        <Button id="navB" className="border-0" name="show" disabled={show && true} value={show} onClick={toggle}>Book Saved</Button>
+        <Button id="navB" className="border-0" disabled={showLibrary && true} onClick={toggle} >Library</Button>
     </div>
     {show && <div id="collection-container">
       {savedCollection.length>0 && savedCollection.map( one => (
@@ -104,14 +107,14 @@ setGetLibraryBooks(send)
         value={oneL._id}
         onClick={getLibraryContents}
         // onClick={filter}
-        >{oneL.name}</Button>
+        ><img src="https://img.icons8.com/offices/30/000000/book-shelf.png"/>{oneL.name}</Button>
     ))}
   
   
     </div>}
 
-    <div>
-    {showLibrary && <div className="d-flex flex-direction-column">
+    <div className="d-flex flex-direction-row justify-content-center">
+    {showLibrary && <div className="d-flex flex-direction-row justify-content-center flex-wrap" >
         {/* cards go here */}
         {getLibraryBooks.length>0 && getLibraryBooks.map((oneB,i) =>(
           <LibraryCards

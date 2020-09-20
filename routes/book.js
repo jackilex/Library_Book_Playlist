@@ -20,7 +20,7 @@ router.get('/', async (req,res)=>{
 router.post('/', async (req,res)=>{
     const checkBooks= await Book.find({"bookId":req.body.bookId});
     // console.log(typeof checkBooks)
-    if(Object.keys(checkBooks).length > 0) return res.status(422).send(new error)
+    if(Object.keys(checkBooks).length > 0) return res.status(400).send('book has been saved already')
 
     const newBook= new Book({
         title:req.body.title,
@@ -80,6 +80,49 @@ router.delete('/:id', async(req,res)=>{
 // res.send(thisBook)
 
 })
+
+router.delete('/delete/:id', async(req,res)=>{
+     try{
+        const thisBook= await Book.findByIdAndRemove(req.params.id);
+    
+        if(!thisBook) return res.status(404).send('The book was not found.');
+       console.log(error)
+      
+       //check if book exist in a library if so remove it
+       const findLibrary= await Library.find({books:req.params.id}).select('_id')
+       const findBooksArray= await Library.findById(findLibrary[0]._id).select('books -_id')
+       
+       if(findLibrary.length>0){
+           let bk=req.params.id
+           let newArray=[]
+
+          findBooksArray.books.map(x=> {
+              
+              if(x == bk){
+                  return
+              }else{
+                  newArray.push(x)
+              }
+              return newArray
+          })
+      
+           
+          let remove= await Library.update({_id:findLibrary[0]._id},{$set:{books:newArray}});
+          await remove.save()
+          res.send(remove);
+        //   console.log(remove)
+      }
+
+     }
+     catch(ex){
+         console.log(ex)
+     }
+    
+    
+    
+    
+    })
+
 
 
 module.exports = router;

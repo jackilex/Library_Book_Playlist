@@ -45,26 +45,45 @@ router.post('/', async (req,res)=>{
 
 
 router.put("/:id", async (req,res)=>{
-
+try{
     const library=await Library.findById(req.params.id)
     
     if(Object.keys(library).length === 0)return res.status(400).send('no libraries found')
 
-    const checkBooks= await Library.findById(req.params.id).populate('Book').select('books');
-    const testIt =await (checkBooks.books).some((x) => {
-        if(x==req.body.book){
-            return true
+    const checkBooks= await Library.find().select('books -_id');
+    console.log(checkBooks)
+    if(checkBooks.length>0){
+    let bk=req.params.id
+     let newBook;
+    checkBooks.map(x=> {
+        if(x.books.length>0){
+            x.books.map(y=>{
+               if ( y== req.body.book) newBook=true
+            })
         }else{
-            return false
+            return
         }
-    
+        // return newArray
+       console.log(newBook)
     })
-    console.log(testIt)
-    if(testIt === true)return res.send('book is already added to library')
-
-
+    console.log(newBook)
+    if(newBook == undefined){
     const newBook= await Library.findByIdAndUpdate(req.params.id,{$push:{"books":req.body.book}},{new: true})
-    res.send(newBook)
+    res.send("book added to library")
+    }else{
+        res.status(404).send('Only one book allowed per library')
+    }
+    }else{
+    const newBook= await Library.findByIdAndUpdate(req.params.id,{$push:{"books":req.body.book}},{new: true})
+    res.send("book added to library")
+    }
+
+
+}
+catch(ex){
+    console.log(ex)
+}
+    
 })
 
 

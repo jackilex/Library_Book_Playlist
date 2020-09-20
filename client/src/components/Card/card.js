@@ -43,18 +43,18 @@ const Card = (props) => {
 
 
     return ( 
-    <div className=" text-white mb-3 mr-4 mt-5" id="card" >
-        <img src={props.image} className="card-img-top" style={{width: "10rem", height:"10rem"}} alt="cover" />
-            <div  id="card-body">
-                <p id="p">TITLE: {props.title}</p> 
-                <p> AUTHOR(S):{props.author} </p>
-                {/* <p className="card-text">Published: {props.publish} </p> */}
-                <div id="button-container">
-                <Popup id="popContainer" trigger={<Button id="button" className="btn-warningborder-0">Read Desctiption</Button>} position="center">    
+    <div className=" text-white pb-5 mr-4 mt-5" id="card" >
+        <img src={props.image} className="card-img-top" style={{width: "10rem", height:"9rem"}} alt="cover" />
+            <div  id="card-body" className="mb-2">
+                <p id="p"><span className="font-weight-bold">TITLE</span>:{' '}{props.title}</p> 
+                <p className="d-flex flex-wrap"><span className="font-weight-bold"> AUTHOR(S)</span>:{" "}{props.author} </p>
+                <p className="card-text"><span className="font-weight-bold">Published</span>:{' '} {props.publish} </p>
+                <div id="button-container" >
+                <Popup id="popContainer" trigger={<Button id="button" className="btn-warning border-0">Read Desctiption</Button>} position="center">    
                 <div id="popup" >DESCRIPTION: {props.description}</div>
                 </Popup>
-                <Button id="button" className="btn-warningborder-0" href={props.link} target="_blank">View</Button>
-                <Button id="button" className="btn-warningborder-0" onClick={thisBook} 
+                <Button id="button" className="btn-warning border-0" href={props.link} target="_blank">View</Button>
+                <Button id="button" className="btn-warning border-0" onClick={thisBook} 
                  target="_blank">
                  {button}
                  </Button>

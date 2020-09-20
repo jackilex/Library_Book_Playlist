@@ -14,9 +14,9 @@ code {
 
 #container{
   min-height: 50vh;
-  width: 93vw;
+  width: 100vw;
   overflow-x:auto !important;
-  background-color: lightseagreen;
+  background-color: rgb(79, 80, 80);
   overflow: auto;
   white-space: nowrap;
 }
@@ -48,7 +48,7 @@ code {
   word-break: break-all 
 }
 #button{
-  margin-top: 3%;
+  padding-top: 1%;
   background-color: orange;
   margin-right: 2%;
 }
@@ -78,13 +78,52 @@ code {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  background-color: rgb(79, 80, 80);
 }
 
 .btn-primary:hover {
   background-color: red !important;
 }
-
+.btn-primary{
+  background-color: rgb(255, 136, 0) !important;
+}
 .btn-warning:hover {
   background-color: orangered!important;
   color: white !important;
 }
+
+#bookNav{
+  background-color: lightseagreen;
+}
+
+#nav{
+  background-color:lightseagreen;
+  border-bottom: 2px solid black;
+}
+
+#mainContainer{
+  background-color:lightseagreen;
+  
+  
+}
+
+#searchContainer{
+  border-bottom: 2px solid black;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+#collectionCard{
+  background-color: lightseagreen !important;
+}
+
+#navB{
+  color: black !important;
+  background-color: lightseagreen !important;
+}
+
+#library-container{
+  min-height: 100vh;
+  background-color: rgb(79, 80, 80);
+}
+
