@@ -8,11 +8,11 @@ const Search = (props) => {
         <input className="search"
         onChange={props.handleSearchChange} 
         type='text' 
-        placeholder="Find a book"
+        placeholder="By Book Title"
         name="findbook"
         value={props.findBook}
         ></input>
-        <button className="btn btn-success" type="button" onClick={()=>props.handleSubmit()} >Send</button>
+        <button id="send" className="btn btn-success ml-1" type="button" onClick={()=>props.handleSubmit()} >Send</button>
     </div>
      );
 }

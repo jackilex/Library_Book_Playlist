@@ -19,8 +19,8 @@ router.get('/', async (req,res)=>{
 
 router.post('/', async (req,res)=>{
     const checkBooks= await Book.find({"bookId":req.body.bookId});
-    // console.log(typeof checkBooks)
-    if(Object.keys(checkBooks).length > 0) return res.status(400).send('book has been saved already')
+    
+    if(Object.keys(checkBooks).length > 0) return res.status(400).send('This book has been saved already')
 
     const newBook= new Book({
         title:req.body.title,
@@ -71,20 +71,18 @@ router.delete('/:id', async(req,res)=>{
 
      let id=findLibrary
     let remove= await Library.update({_id:findLibrary[0]._id},{$set:{books:newArray}});
-    await remove.save()
-    res.send(remove);
+    res.send(newArray);
     console.log(remove)
 }
-//  res.send(findBooksArray)
-// console.log(findBooksArray)
-// res.send(thisBook)
+
 
 })
 
 router.delete('/delete/:id', async(req,res)=>{
      try{
         const thisBook= await Book.findByIdAndRemove(req.params.id);
-    
+        res.send(thisBook)
+
         if(!thisBook) return res.status(404).send('The book was not found.');
        console.log(error)
       
@@ -108,8 +106,8 @@ router.delete('/delete/:id', async(req,res)=>{
       
            
           let remove= await Library.update({_id:findLibrary[0]._id},{$set:{books:newArray}});
-          await remove.save()
-          res.send(remove);
+         
+          res.send('Book has been deleted');
         //   console.log(remove)
       }
 

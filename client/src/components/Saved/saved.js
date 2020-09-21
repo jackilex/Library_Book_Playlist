@@ -5,6 +5,7 @@ import LibraryCollection from '../Library'
 import LibraryCards from '../Card/LibraryCards'
 import { Button } from 'react-bootstrap'
 import axios from "axios";
+import { toast } from 'react-toastify';
 
 
 
@@ -15,7 +16,9 @@ const [show, setShow]=useState(true)
 const [showLibrary, setShowLibrary]=useState(false)
 const [myLibraries, setLibraries]= useState([])
 const [getLibraryBooks,setGetLibraryBooks]=useState([])
-const [reloadOnDelete, setReloadOnDelete]=useState('')
+const [currentLibrary, setCurrentLibrary]=useState('')
+const [dataLoading, setDataLoading]=useState(false)
+
 
 function toggle(){
   let resultForBooks= !show
@@ -24,9 +27,8 @@ function toggle(){
     setShowLibrary(resultForLibraries)
     if(resultForLibraries=== true){
         getLibraries()
-      //   if(showLibrary===true){
-      //   getThisLib(reloadOnDelete)
-      // }
+        // console.log(getLibraryBooks)
+        setGetLibraryBooks([])
     }
 }
 
@@ -34,30 +36,35 @@ function toggle(){
 function getLibraries(){
     axios.get("/api/library")
   .then(res => setLibraries(res.data))
-  .catch(err => console.log(err))
+  .catch(err => console.log(err.respnse.data))
     }
   
     
-async function getLibraryContents(e){
-  const id=await e.target.value
-  setReloadOnDelete(id)
-  getThisLib(id)
+function getLibraryContents(e){
+  const id= e.target.value
+setCurrentLibrary(id) 
+ getThisLib(id)
 
 }
 
 function getThisLib(id){
+  
   axios.get("/api/library/"+id)
   .then(res => {
     filter(savedCollection,res.data.books)
   })
-  .catch(err => console.log(err))
+  .catch(err => {
+    toast.error('Whoops! something went wrong. WAIT and Tap Library again to retry')
+    getLibraries()
+
+  })
  
   }
   
 
 
 
-async function filter(all,want){
+function filter(all,want){
   let send=[]
 // all.filter(x=> console.log(x===want[0]))
 all.map(x =>{
@@ -68,9 +75,16 @@ all.map(x =>{
     }
   })
 })
+
 setGetLibraryBooks(send)
+if(send.length===0){
+  toast.info("No book added to this library yet")
+}
+
 
 }
+
+
 
     return ( 
         <div id="library-container" >
@@ -106,6 +120,7 @@ setGetLibraryBooks(send)
         key={oneL._id}
         value={oneL._id}
         onClick={getLibraryContents}
+         
         // onClick={filter}
         ><img src="https://img.icons8.com/offices/30/000000/book-shelf.png"/>{oneL.name}</Button>
     ))}
@@ -129,9 +144,8 @@ setGetLibraryBooks(send)
     _id={oneB._id}
     getLibraries={getLibraries}
     myLibraries={myLibraries}
-    reloadOnDelete={reloadOnDelete}
     getThisLib={getThisLib}
-    
+    currentLibrary={currentLibrary}
           />
         ))}
     </div>}

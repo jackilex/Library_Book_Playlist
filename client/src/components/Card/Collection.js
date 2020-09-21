@@ -27,10 +27,11 @@ const Collection = (props) => {
       function handleChange(e){
           const lib= (e.target.value.split(','))[0];
           const book=(e.target.value.split(','))[1];
-          
+          const lName=(e.target.value.split(','))[2]
+          const lBook= props.title
         // console.log(lib,book)
           axios.put("/api/library/"+lib,{book:book})
-        .then(res => console.log(res))
+        .then(res => toast.success(`${lBook} was saved to ${lName}`))
         .catch(err => toast.error(err.response.data))
           
       }
@@ -61,7 +62,7 @@ const Collection = (props) => {
                 <select onChange={handleChange}>
                 <option>{'Your Libraries'}</option>
                         {choice && choice.map((lib,i) =>(
-                            <option key={i} value={[lib._id,props._id]} >{lib.name}</option>
+                            <option key={i} value={[lib._id,props._id,lib.name]} >{lib.name}</option>
                         ))}
                 </select>
                 </Popup>

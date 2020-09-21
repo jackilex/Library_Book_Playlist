@@ -51,29 +51,38 @@ useEffect(() => {
 
 
 useEffect(() => {
+  let isSubscribed = true
 
   axios.get("/api/book")
-  .then(res => setGetCollection(res.data))
-  .catch(err => console.log(err))
+  .then(res => {
+    if (isSubscribed)
+    {setGetCollection(res.data)}
+  
+  })
+  .catch(err => console.log(err));
+
+  return () => isSubscribed = false
 
 },[getCollection]);
 
 function savingBook(saveme){
 axios.post("/api/book", saveme)
 .then(res => toast.success('Book Saved'))
-.catch(err => toast.error(err.response.data))
+.catch(err => toast.info(err.response.data))
 }
   
 function deleteIt(id){
 axios.delete("/api/book/"+id)
-.then(res => console.log('t be deleted'))
+.then(res =>{ 
+  console.log(res)
+  toast.success('book is removed')})
 .catch(err => console.log(err))
-// console.log(id)
+
 }
 
 function deleteBook(id){
   axios.delete("/api/book/delete/"+id)
-  .then(res => console.log(res))
+  .then(res => toast.success('Book deleted'))
   .catch(err => console.log(err))
   // console.log(id)
   }

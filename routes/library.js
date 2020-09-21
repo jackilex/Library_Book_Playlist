@@ -16,12 +16,17 @@ router.get('/', async (req,res)=>{
 
 router.get("/:id", async (req,res)=>{
 
-    const library=Library.findById(req.params.id)
+    try{
+        const library=Library.findById(req.params.id)
     if(library.length===0)return res.status(400).send('no libraries found')
 
 
     const thisLibrary= await Library.findById(req.params.id).populate('Book').select()
     res.send(thisLibrary)
+}catch(ex){
+    res.status(400).send(ex)
+}
+
 })
 
 

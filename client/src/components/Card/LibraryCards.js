@@ -13,8 +13,9 @@ const LibraryCards = (props) => {
     const collectionId=props._id
 
     async function handleDelete(){
-        deletedCollection(collectionId);
-       await props.getThisLib(props.reloadOnDelete)
+     await deletedCollection(collectionId);
+     props.getThisLib(props.currentLibrary)
+    
     }
     return ( 
         <div className="text-white bg-primary mb-3 mr-4 mt-5" style={{ width:"15rem"}}>
