@@ -36,7 +36,11 @@ const Collection = (props) => {
           
       }
 
- 
+      async function handleDelete(){
+       await  deleteBook(collectionId);
+        
+        props.getBook()
+      }
    
     return ( 
         <div id="collectionCard" className="text-white bg-primary mb-3 mr-4 mt-5 pt-2" style={{ width:"15rem"}}>
@@ -70,7 +74,7 @@ const Collection = (props) => {
                 
                 <Button  
                  target="_blank"
-                 onClick={()=>deleteBook(collectionId)}
+                 onClick={handleDelete}
                  >
                  DELETE BOOK
                  </Button>

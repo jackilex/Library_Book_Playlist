@@ -34,11 +34,10 @@ const Card = (props) => {
 }
 
 
-     function thisBook(){
-    console.log('working')
-     props.setSaved(thisObj);
-     props.savingBook(thisObj)
-     
+    function thisBook(){
+    props.setSaved(thisObj);
+    props.savingBook(thisObj)
+     props.getBook()
     }
 
 

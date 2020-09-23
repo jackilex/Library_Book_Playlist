@@ -131,3 +131,7 @@ code {
 background-color: rgb(3, 73, 30) ! important;
 }
 
+#danger{
+  background-color: red !important;
+  
+}

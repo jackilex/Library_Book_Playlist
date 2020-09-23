@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 
 
 
-const SavedContainer = () => {
+const SavedContainer = (props) => {
 
 const savedCollection=useContext(context)
 const [show, setShow]=useState(true)
@@ -17,7 +17,7 @@ const [showLibrary, setShowLibrary]=useState(false)
 const [myLibraries, setLibraries]= useState([])
 const [getLibraryBooks,setGetLibraryBooks]=useState([])
 const [currentLibrary, setCurrentLibrary]=useState('')
-const [dataLoading, setDataLoading]=useState(false)
+const [libId, setLibId]=useState('')
 
 
 function toggle(){
@@ -25,7 +25,11 @@ function toggle(){
   let resultForLibraries= !showLibrary
     setShow(resultForBooks)
     setShowLibrary(resultForLibraries)
-    if(resultForLibraries=== true){
+  if(resultForBooks ==true){
+    setLibraries([])
+  }
+    
+    if(resultForLibraries== true){
         getLibraries()
         // console.log(getLibraryBooks)
         setGetLibraryBooks([])
@@ -36,14 +40,17 @@ function toggle(){
 function getLibraries(){
     axios.get("/api/library")
   .then(res => setLibraries(res.data))
-  .catch(err => console.log(err.respnse.data))
+  .catch(err => setLibraries([]))
     }
   
     
-function getLibraryContents(e){
-  const id= e.target.value
-setCurrentLibrary(id) 
- getThisLib(id)
+async function getLibraryContents(e){
+  
+  console.log(e.currentTarget.name)
+  getThisLib( e.currentTarget.name)
+setCurrentLibrary( e.currentTarget.name) 
+  
+ 
 
 }
 
@@ -55,7 +62,7 @@ function getThisLib(id){
   })
   .catch(err => {
     toast.error('Whoops! something went wrong. WAIT and Tap Library again to retry')
-    getLibraries()
+    
 
   })
  
@@ -106,19 +113,20 @@ if(send.length===0){
     _id={one._id}
     getLibraries={getLibraries}
     myLibraries={myLibraries}
+    getBook={props.getBook}
     />
       ) ) }
         
     </div>}
     {showLibrary &&<div className="pt-4 ">
-        <LibraryCollection   getLibraries={getLibraries}/>
+        <LibraryCollection  setLibraries={setLibraries} getLibraries={getLibraries} setGetLibraryBooks={setGetLibraryBooks}/>
     </div>
     }
     {showLibrary && <div className="pt-2 d-flex justify-content-center flex-direction-column justify-content-center">
-    {myLibraries.map(oneL =>(
+    {myLibraries.length>0 && myLibraries.map(oneL =>(
         <Button className="mb-2 mr-2 bg-success border-0 " 
         key={oneL._id}
-        value={oneL._id}
+        name={oneL._id}
         onClick={getLibraryContents}
          
         // onClick={filter}

@@ -28,7 +28,8 @@ function App() {
 async function handleSubmit(){
   
   const title= await findBook.trim()
-  const {data}= await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}+intitle:${title}&key=AIzaSyB-_zBnjWEf3eIqv0P22htCRJIxxhA567Y`);
+  const {data}= await axios.get(
+    `https://www.googleapis.com/books/v1/volumes?q=${title}+intitle:${title}&key=${process.env.REACT_APP_KEY}`);
   if (data.totalItems > 0){
   setQueryResult(data.items)
   console.log(data.items)
@@ -41,7 +42,7 @@ useEffect(() => {
   fetchData()
   async function fetchData(){
     const title='javscript'
-  const {data}=await axios.get(`https://www.googleapis.com/books/v1/volumes?q=react+intitle:react&key=AIzaSyB-_zBnjWEf3eIqv0P22htCRJIxxhA567Y`);
+  const {data}=await axios.get(`https://www.googleapis.com/books/v1/volumes?q=react+intitle:react&key=${process.env.REACT_APP_KEY}`);
  await console.log({data})
  setQueryResult(data.items);
   }
@@ -49,21 +50,12 @@ useEffect(() => {
 },[]);
 
 
-
 useEffect(() => {
-  let isSubscribed = true
 
-  axios.get("/api/book")
-  .then(res => {
-    if (isSubscribed)
-    {setGetCollection(res.data)}
-  
-  })
-  .catch(err => console.log(err));
+  getBook()
 
-  return () => isSubscribed = false
 
-},[getCollection]);
+},[saved]);
 
 function savingBook(saveme){
 axios.post("/api/book", saveme)
@@ -87,6 +79,13 @@ function deleteBook(id){
   // console.log(id)
   }
 
+  function getBook(){
+    axios.get("/api/book")
+  .then(res => {
+  setGetCollection(res.data)
+  })
+  .catch(err => setGetCollection([]));
+  }
 
   return (
     
@@ -104,6 +103,7 @@ function deleteBook(id){
         handleSearchChange={handleSearchChange}
         findBook={findBook}
         queryResult={queryResult}
+        
       />
       </div>
       <div className=" testimonial-group d-flex" id="container" >
@@ -120,13 +120,16 @@ function deleteBook(id){
           setSaved={setSaved}
           saved={saved}
           savingBook={savingBook}
-         
+          getBook={getBook}
+          setGetCollection={setGetCollection}
+
+
         />
       ))}
       </div>
       </div>
       <div>
-        <SavedContainer/>
+        <SavedContainer getBook={getBook}/>
       </div>
       </div>
       </deleteBookContext.Provider>

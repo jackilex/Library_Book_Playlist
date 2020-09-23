@@ -13,7 +13,7 @@ const LibraryCards = (props) => {
     const collectionId=props._id
 
     async function handleDelete(){
-     await deletedCollection(collectionId);
+     deletedCollection(collectionId);
      props.getThisLib(props.currentLibrary)
     
     }
