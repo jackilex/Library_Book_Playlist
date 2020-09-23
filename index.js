@@ -20,15 +20,14 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-app.use(function(req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-})
+
 // `setting up mongoDB connection to use localhost
 // or production env`
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks", {
     useNewUrlParser: true,
     useFindAndModify: false,
      useUnifiedTopology: true 
+
   });
 
 mongoose.connection.on('connected',()=>{
@@ -39,8 +38,8 @@ mongoose.connection.on('connected',()=>{
 
 
 //step 4 after setting up routes (middleware)
-app.use('./api/book', book);
-app.use('./api/library', library);
+app.use('/api/book', book);
+app.use('/api/library', library);
  
 
 // `step 2 set up to use express router set up
