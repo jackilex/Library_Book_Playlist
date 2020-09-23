@@ -1,9 +1,9 @@
 const mongoose= require('mongoose');
 
-//testing schema on this file
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks")
-.then(()=> console.log('connected to Mongodb'))
-.catch(err=> console.log('could not connect to MongoDb...', err))
+// //testing schema on this file
+// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks")
+// .then(()=> console.log('connected to Mongodb'))
+// .catch(err=> console.log('could not connect to MongoDb...', err))
 
 const bookSchema= new mongoose.Schema({
     title:{

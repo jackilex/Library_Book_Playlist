@@ -5,6 +5,8 @@ const mongoose=require("mongoose");
 const app= express()
 const book= require('./routes/book')
 const library= require('./routes/library')
+require('dotenv').config();
+
 const PORT = process.env.PORT || 3001;
 
 // `step 1`
@@ -12,6 +14,15 @@ const PORT = process.env.PORT || 3001;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
+app.use(function(req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+})
 // `setting up mongoDB connection to use localhost
 // or production env`
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks", {
@@ -20,10 +31,16 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks", {
      useUnifiedTopology: true 
   });
 
+mongoose.connection.on('connected',()=>{
+  console.log('Mongoose connected')
+})
+
+
+
 
 //step 4 after setting up routes (middleware)
-app.use('/api/book', book);
-app.use('/api/library', library);
+app.use('./api/book', book);
+app.use('./api/library', library);
  
 
 // `step 2 set up to use express router set up

@@ -92,13 +92,24 @@ catch(ex){
 })
 
 
-router.delete('/:id'), async(req,res)=>{
-    const removedLibrary= await Library.findByIdAndRemove(req.body._id);
+
+   router.delete('/delete/:id', async(req,res)=>{
+    try{
+        const removedLibrary= await Library.findByIdAndDelete(req.params.id);
+        removedLibrary.save()
+        console.log(req.params.id)
+        res.send('library removed');
+
+     }
+    catch(ex){
+        console.log(ex)
+    }
    
-    if(!removedLibrary) return res.satus(400).send('this Library with given ID is invalid, cannot be deleted');
-       
    
-   }
+   
+   
+   })
+
 
    module.exports = router;
    

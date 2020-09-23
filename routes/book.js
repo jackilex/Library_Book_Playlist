@@ -48,10 +48,7 @@ router.get('/:id', async(req,res)=>{
 
 
 router.delete('/:id', async(req,res)=>{
-//  const thisBook= await Book.findByIdAndRemove(req.params.id);
 
-//   if(!thisBook) return res.status(404).send('The book was not found.');
-//  console.log(error)
 
  const findLibrary= await Library.find({books:req.params.id}).select('_id')
  const findBooksArray= await Library.findById(findLibrary[0]._id).select('books -_id')
@@ -71,8 +68,8 @@ router.delete('/:id', async(req,res)=>{
 
      let id=findLibrary
     let remove= await Library.update({_id:findLibrary[0]._id},{$set:{books:newArray}});
-    res.send(newArray);
-    console.log(remove)
+    res.send(remove);
+    // console.log(newArray)
 }
 
 
