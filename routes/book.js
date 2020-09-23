@@ -121,16 +121,3 @@ router.delete('/delete/:id', async(req,res)=>{
 
 module.exports = router;
 
-
-// if(checkBook.length==0) return res.satus(400).send('this book with given ID is invalid, cannot be deleted');
-// try{
-//     new Fawn.Task()
-//     .remove('books',{"_id":req.body._id})
-//     .update('libraries',{$unset:{"bookId":req.body.BookId}})
-//     .run()
-
-//     res.send('deleted')
-// }catch (ex){
-// res.status(400).send('Failed')
-// }
-//  console.log(checkBook)
