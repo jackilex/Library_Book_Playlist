@@ -2,6 +2,7 @@
 const express=require('express')
 const mongoose=require("mongoose");
 // const routes =require('./routes');
+const path = require("path");
 const app= express()
 const book= require('./routes/book')
 const library= require('./routes/library')
@@ -38,9 +39,14 @@ mongoose.connection.on('connected',()=>{
 
 
 //step 4 after setting up routes (middleware)
+// API Routes
 app.use('/api/book', book);
 app.use('/api/library', library);
- 
+
+// If no API routes are hit, send the React app
+app.use(function(req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
 // `step 2 set up to use express router set up
 // app.use(routes);
