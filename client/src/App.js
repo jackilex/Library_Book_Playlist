@@ -41,7 +41,7 @@ async function handleSubmit(){
 useEffect(() => {
   fetchData()
   async function fetchData(){
-    const title='javscript'
+  
   const {data}=await axios.get(`https://www.googleapis.com/books/v1/volumes?q=react+intitle:react&key=${process.env.REACT_APP_KEY}`);
  await console.log({data})
  setQueryResult(data.items);

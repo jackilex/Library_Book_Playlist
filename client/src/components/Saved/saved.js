@@ -17,7 +17,7 @@ const [showLibrary, setShowLibrary]=useState(false)
 const [myLibraries, setLibraries]= useState([])
 const [getLibraryBooks,setGetLibraryBooks]=useState([])
 const [currentLibrary, setCurrentLibrary]=useState('')
-const [libId, setLibId]=useState('')
+
 
 
 function toggle(){
@@ -25,11 +25,11 @@ function toggle(){
   let resultForLibraries= !showLibrary
     setShow(resultForBooks)
     setShowLibrary(resultForLibraries)
-  if(resultForBooks ==true){
+  if(resultForBooks ===true){
     setLibraries([])
   }
     
-    if(resultForLibraries== true){
+    if(resultForLibraries=== true){
         getLibraries()
         // console.log(getLibraryBooks)
         setGetLibraryBooks([])
@@ -77,7 +77,7 @@ function filter(all,want){
 all.map(x =>{
   let id=x._id
   want.map(y => {
-    if(y==id){
+    if(y===id){
       send.push(x)  
     }
   })
