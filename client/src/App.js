@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Navbar from './components/Navbar'
-import SearchContainer from './components/Search'
-import Card from './components/Card'
-import SavedContainer from './components/Saved'
+import Navbar from './components/Navbar/nav'
+import SearchContainer from './components/Search/search'
+import Card from './components/Card/Card'
+import SavedContainer from './components/Saved/saved'
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import context from './components/Context/Context'

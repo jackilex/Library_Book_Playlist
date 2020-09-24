@@ -1,6 +1,6 @@
 import React from "react";
 import Search from './search'
-import Card from '../Card'
+import Card from '../Card/Card'
 
 
 const SearchContainer= (props) => {

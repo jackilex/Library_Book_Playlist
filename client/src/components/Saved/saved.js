@@ -1,7 +1,7 @@
 import React,{useContext, useState} from 'react';
 import Collection from '../Card/Collection'
 import context from '../Context/Context'
-import LibraryCollection from '../Library'
+import LibraryCollection from '../Library/Library'
 import LibraryCards from '../Card/LibraryCards'
 import { Button } from 'react-bootstrap'
 import axios from "axios";
